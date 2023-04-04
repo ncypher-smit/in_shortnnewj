@@ -105,7 +105,10 @@ class _SettingScreenState extends State<SettingScreen> {
                   settingController.hdImageBtn = value;
                 },
               ),
-              languageField(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: languageField(),
+              )
             ],
           );
         },
@@ -165,54 +168,58 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   languageField() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: Colors.pink),
-      child: DropdownButton(
-        isExpanded: true,
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+        child: DropdownButton(
+          isExpanded: true,
+          focusColor: Colors.white,
+          underline: const Divider(color: Colors.grey),
+          value: settingController.chosenValue,
+          style: const TextStyle(color: Colors.white),
 
-        ///focusColor: Colors.white,
-        underline: const Divider(color: Colors.grey),
-        value: settingController.chosenValue,
-        style: const TextStyle(color: Colors.white),
+          /// iconEnabledColor: Colors.black,
+          icon: const Padding(
+            padding: EdgeInsets.only(bottom: 20),
+            child: Icon(
+              Icons.arrow_drop_down,
+              size: 35,
+              //color: Colors.red,
 
-        /// iconEnabledColor: Colors.black,
-        icon: const Padding(
-          padding: EdgeInsets.only(bottom: 20),
-          child: Icon(
-            Icons.arrow_drop_down,
-            size: 35,
-            //color: Colors.red,
-
-            ///  color: AppColors.appColor,
+              ///  color: AppColors.appColor,
+            ),
           ),
-        ),
-        items: settingController.languageSelectList
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem(
-            value: value,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Text(
-                value,
-                style: const TextStyle(
-                  color: Colors.black,
+          items: settingController.languageSelectList
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Text(
+                  value,
+                  style: const TextStyle(
+                    color: Colors.black,
 
-                  /// fontFamily: kAppFont,
-                  fontSize: 18,
+                    /// fontFamily: kAppFont,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ),
-          );
-        }).toList(),
-        hint: const Text(
-          "",
+            );
+          }).toList(),
+          hint: const Text(
+            "",
+          ),
+          onChanged: (String? value) {
+            setState(() {
+              settingController.chosenValue = value.toString();
+            });
+          },
         ),
-        onChanged: (String? value) {
-          setState(() {
-            settingController.chosenValue = value.toString();
-          });
-        },
       ),
     );
   }
